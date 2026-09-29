@@ -3,7 +3,7 @@
 Ein C99-Sicherheitslabor in zwei Hälften:
 
 - **`food.c`** — ein absichtlich angreifbarer TCP-Daemon. Er enthält einen
-  echten, lehrbuchreifen Stack-Pufferüberlauf (CWE-120) und nebenbei noch ein
+  echten, lehrbuchreifen Stack-Pufferüberlauf ([CWE-120](https://cwe.mitre.org/data/definitions/120.html)) und nebenbei noch ein
   paar weitere Bugs.
 - **`fooc.c`** — ein Exploit dafür. Er berechnet das Overflow-Offset, indem er
   das Zielprogramm zur Laufzeit disassembliert, liest Adress-Leaks vom Daemon
@@ -252,7 +252,7 @@ Ereigniskette macht.
 | **PIE + ASLR** | `-fPIE` + ASLR=2 (beides Standard) | ret2wins fest verdrahtete Adressen. Alles bewegt sich bei jedem Lauf | Alles, wo der Angreifer ein Leak hat. ASLR erhöht die Kosten eines Exploits; es ist kein Fix. Beachte, dass Stack, Heap und mmap randomisiert sind, der *Inhalt* des Haupt-Binärprogramms jedoch nicht — das ist es, was ROP-Ketten verwenden |
 | **Nicht leaken** | kein `printf("%p")` an Clients; vor dem Drucken initialisieren | Der Informations-Leak, der ASLR von „teuer" zu „gratis" macht | — |
 | **Kein `printf(user_data)`** | `printf("%s", buf)` statt `printf(buf)` | Format-String-Bugs: `%x`-Stack-Reads, `%n`-beliebige Schreibzugriffe — ein *zweiter* Weg zu RCE | — |
-| **Keine unvertrauenswürdigen Pfade** | validieren und `openat()` unter einem festen Verzeichnis | Pfad-Traversal (CWE-22) | — |
+| **Keine unvertrauenswürdigen Pfade** | validieren und `openat()` unter einem festen Verzeichnis | Pfad-Traversal ([CWE-22](https://cwe.mitre.org/data/definitions/22.html)) | — |
 | **CET / Shadow Stack** | `-fcf-protection=full`, Kernel- und CPU-Unterstützung | Das `ret` selbst: Der Shadow Stack merkt sich die *echte* Rücksprungadresse und fault bei einem Mismatch. Fängt ROP-Ketten ab, die Hardware-`ret` verwenden | Angriffe, die nie `ret` ausführen (call-oriented, oder das Ziel eines Funktionspointers mit einer Gadget-Kette überschreiben, die keine Rückkehr braucht) |
 | **Sichere Sprachen** | Rust, Go, C# für neuen Code | Die ganze Klasse. Bounds-Checks werden zur Laufzeit geprüft, nicht beim Review erhofft | — |
 

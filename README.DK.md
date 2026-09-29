@@ -3,7 +3,7 @@
 Et C99-sikkerhedslaboratorium i to halvdele:
 
 - **`food.c`** — en bevidst sårbar TCP-daemon. Den har et ægte,
-  lærebogsagtigt stack-bufferoverløb (CWE-120) og et par fejl oveni.
+  lærebogsagtigt stack-bufferoverløb ([CWE-120](https://cwe.mitre.org/data/definitions/120.html)) og et par fejl oveni.
 - **`fooc.c`** — et exploit til den. Det beregner overflow-offsettet ved at
   disassemblere target-programmet ved kørsel, læser adresse-leaks fra daemonen
   og får en shell på "offeret" ved at overskrive en gemt returadresse.
@@ -238,7 +238,7 @@ viser, hvad den rent faktisk gør ved begivenhedskæden.
 | **PIE + ASLR** | `-fPIE` + ASLR=2 (begge standard) | ret2wins hardkodede adresser. Alt flytter sig ved hver kørsel | Alt, hvor angriberen har et leak. ASLR hæver prisen på et exploit; det er ikke en fix. Bemærk, at stack, heap og mmap randomiseres, men hoved-binærfilens *indhold* gør ikke — det er det, ROP-kæder bruger |
 | **Læk ikke** | ingen `printf("%p")` til klienter; initialisér før du printer | Det informationsleak, der gør ASLR til "gratis" i stedet for "dyrt" | — |
 | **Brug ikke `printf(user_data)`** | `printf("%s", buf)` i stedet for `printf(buf)` | Format-string-fejl: `%x`-stack-reads, `%n`-vilkårlige skrivninger, hvilket er en *anden* vej til RCE | — |
-| **Brug ikke utroverdige stier** | validér og `openat()` under en fast mappe | Sti-traversal (CWE-22) | — |
+| **Brug ikke utroverdige stier** | validér og `openat()` under en fast mappe | Sti-traversal ([CWE-22](https://cwe.mitre.org/data/definitions/22.html)) | — |
 | **CET / shadow stack** | `-fcf-protection=full`, kernel- og CPU-understøttelse | `ret`-et selv: shadow stacken husker den *rigtige* returadresse og fault'er ved mismatch. Fanger ROP-kæder, der bruger hardware-`ret` | Angreb, der aldrig `ret` (call-oriented, eller at overskrive en funktionspegers mål med en gadget-kæde, der ikke behøver en retur) |
 | **Sikre sprog** | Rust, Go, C# til ny kode | Hele klassen. Bounds-tjek udføres ved kørsel, ikke håbet på ved review | — |
 

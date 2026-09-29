@@ -3,7 +3,7 @@
 Et C99-sikkerhetslaboratorium i to halvdeler:
 
 - **`food.c`** — en bevisst sårbar TCP-daemon. Den har et ekte,
-  lærebokaktig stack-bufferoverløp (CWE-120), og noen flere feil i tillegg.
+  lærebokaktig stack-bufferoverløp ([CWE-120](https://cwe.mitre.org/data/definitions/120.html)), og noen flere feil i tillegg.
 - **`fooc.c`** — et exploit for det. Det beregner overflow-offsetet ved å
   disassemblere målprogrammet under kjøring, leser adresse-leaks fra daemonen,
   og får en shell på "offeret" ved å overskrive en lagret returadresse.
@@ -239,7 +239,7 @@ den faktisk gjør med hendelseskjeden.
 | **PIE + ASLR** | `-fPIE` + ASLR=2 (begge standard) | ret2wins hardkodede adresser. Alt flytter seg ved hver kjøring | Alt der angriperen har et leak. ASLR hever prisen på et exploit; det er ikke en fix. Merk at stack, heap og mmap randomiseres, men hoved-binærfilens *innhold* gjør det ikke — det er det ROP-kjeder bruker |
 | **Ikke lek** | ingen `printf("%p")` til klienter; initialiser før du skriver ut | Informasjonsleaket som gjør ASLR fra "dyrt" til "gratis" | — |
 | **Ikke bruk `printf(user_data)`** | `printf("%s", buf)` i stedet for `printf(buf)` | Format-streng-feil: `%x`-stack-reads, `%n`-vilkårlige skrivninger, som er en *annen* vei til RCE | — |
-| **Ikke bruk upålitelige stier** | valider og `openat()` under en fast mappe | Sti-traversal (CWE-22) | — |
+| **Ikke bruk upålitelige stier** | valider og `openat()` under en fast mappe | Sti-traversal ([CWE-22](https://cwe.mitre.org/data/definitions/22.html)) | — |
 | **CET / shadow stack** | `-fcf-protection=full`, kjernens og CPU-ens støtte | `ret`-et selv: shadow stacken husker den *ekte* returadressen og feiler ved mismatch. Fanger ROP-kjeder som bruker maskinvare-`ret` | Angrep som aldri `ret`-er (call-oriented, eller å overskrive en funksjonspekermål med en gadget-kjede som ikke trenger retur) |
 | **Sikre språk** | Rust, Go, C# for ny kode | Hele klassen. Bounds-sjekker utføres ved kjøring, ikke håpet på ved review | — |
 

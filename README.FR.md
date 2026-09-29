@@ -3,7 +3,7 @@
 Un laboratoire de sécurité en C99 en deux moitiés :
 
 - **`food.c`** — un démon TCP volontairement vulnérable. Il contient un vrai
-  débordement de tampon de pile, digne d'un manuel (CWE-120), plus quelques
+  débordement de tampon de pile, digne d'un manuel ([CWE-120](https://cwe.mitre.org/data/definitions/120.html)), plus quelques
   bugs en prime.
 - **`fooc.c`** — un exploit contre lui. Il calcule l'offset du débordement en
   désassemblant le programme cible à l'exécution, lit les fuites d'adresses du
@@ -249,7 +249,7 @@ de droite montre ce qu'elle fait réellement à la chaîne des événements.
 | **PIE + ASLR** | `-fPIE` + ASLR=2 (tous deux par défaut) | Les adresses hardcodées de ret2win. Tout bouge à chaque exécution | Tout ce où l'attaquant a une fuite. ASLR augmente le prix d'un exploit ; ce n'est pas un correctif. Notez que la pile, le tas et mmap sont randomisés, mais pas le *contenu* du binaire principal — c'est ce que les chaînes ROP utilisent |
 | **Ne fuytez rien** | aucun `printf("%p")` vers les clients ; initialisez avant d'afficher | La fuite d'information qui rend ASLR « gratuit » au lieu de « cher » | — |
 | **N'utilisez pas `printf(user_data)`** | `printf("%s", buf)` au lieu de `printf(buf)` | Les bugs de chaîne de format : lectures de pile `%x`, écritures arbitraires `%n` — une *autre* voie vers RCE | — |
-| **N'utilisez pas de chemins non fiables** | validez et `openat()` sous un répertoire fixe | Traversal de chemin (CWE-22) | — |
+| **N'utilisez pas de chemins non fiables** | validez et `openat()` sous un répertoire fixe | Traversal de chemin ([CWE-22](https://cwe.mitre.org/data/definitions/22.html)) | — |
 | **CET / shadow stack** | `-fcf-protection=full`, support noyau et CPU | Le `ret` lui-même : la shadow stack mémorise la *vraie* adresse de retour et fault en cas de mismatch. Attrape les chaînes ROP qui utilisent le `ret` matériel | Les attaques qui ne `ret` jamais (call-oriented, ou écraser la cible d'un pointeur de fonction avec une chaîne de gadgets qui n'a pas besoin de retour) |
 | **Langages sûrs** | Rust, Go, C# pour le nouveau code | Toute la classe. Les vérifications de bornes sont imposées à l'exécution, pas espérées à la revue | — |
 

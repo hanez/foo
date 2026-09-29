@@ -3,7 +3,7 @@
 Een C99-beveiligingslab in twee helften:
 
 - **`food.c`** — een bewust kwetsbare TCP-daemon. Hij heeft een echte,
-  schoolboekachtige stack-bufferoverloop (CWE-120), plus een paar bugs
+  schoolboekachtige stack-bufferoverloop ([CWE-120](https://cwe.mitre.org/data/definitions/120.html)), plus een paar bugs
   extra.
 - **`fooc.c`** — een exploit daarvoor. Hij berekent de overflow-offset door
   het doelprogramma tijdens het draaien te disassembleren, leest
@@ -243,7 +243,7 @@ rechterkolom laat zien wat die daadwerkelijk met de gebeurtenisketen doet.
 | **PIE + ASLR** | `-fPIE` + ASLR=2 (beide standaard) | De hardcoded adressen van ret2win. Alles verschuift bij elke run | Alles waar de aanvaller een lek heeft. ASLR verhoogt de prijs van een exploit; het is geen fix. Merk op dat stack, heap en mmap worden gerandomiseerd, maar de *inhoud* van de hoofd-binary niet — dat is wat ROP-ketens gebruiken |
 | **Lek niets** | geen `printf("%p")` naar clients; initialiseer vóór je print | Het informatielek dat ASLR van "duur" naar "gratis" verandert | — |
 | **Gebruik geen `printf(user_data)`** | `printf("%s", buf)` in plaats van `printf(buf)` | Format-string-bugs: `%x`-stack-reads, `%n`-willekeurige schrijfbewerkingen — een *andere* weg naar RCE | — |
-| **Gebruik geen onbetrouwbare paden** | valideer en `openat()` onder een vaste map | Pad-traversal (CWE-22) | — |
+| **Gebruik geen onbetrouwbare paden** | valideer en `openat()` onder een vaste map | Pad-traversal ([CWE-22](https://cwe.mitre.org/data/definitions/22.html)) | — |
 | **CET / shadow stack** | `-fcf-protection=full`, kernel- en CPU-ondersteuning | De `ret` zelf: de shadow stack onthoudt het *echte* retouradres en faalt bij een mismatch. Vangt ROP-ketens die hardware-`ret` gebruiken | Aanvallen die nooit `ret`-en (call-oriented, of het doel van een functiepointer overschrijven met een gadget-keten die geen retour nodig heeft) |
 | **Veilige talen** | Rust, Go, C# voor nieuwe code | De hele klasse. Bounds-checks worden tijdens de uitvoering afgedwongen, niet vertrouwd bij review | — |
 

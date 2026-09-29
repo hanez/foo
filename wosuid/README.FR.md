@@ -185,10 +185,10 @@ n'auraient rien appris. Supprimé.
 
 | # | bug | CWE | note |
 |---|-----|-----|------|
-| 1 | `read(fd, buf, 512)` dans un tampon de pile de 64 octets | CWE-120 | le débordement : 448 octets au-delà de `buf`, RIP sauvegardée à +88 |
-| 2 | seulement `snprintf(line, …, "%.*s", …)` ; mais `%` de l'attaquant dans le chemin d'echo | CWE-134 | la fuite est ici la vraie payload ; un `%n` dans un processus *root* serait un write-what-where en root |
-| 3 | les enfants gardent root en traitant des entrées non fiables | CWE-271 | le `drop_privs()` correct (setgroups→setgid→setuid, dans cet ordre, avec vérification) est dans le fichier, commenté, *délibérément jamais appelé* |
-| 4 | `ids=`, `stack=`, `libc=`, `BUF=` révélés à n'importe quel client | CWE-200 | sans ces fuites, les techniques shellcode et ret2libc ne pourraient pas calculer d'adresses (ASLR les vaincrait) |
+| 1 | `read(fd, buf, 512)` dans un tampon de pile de 64 octets | [CWE-120](https://cwe.mitre.org/data/definitions/120.html) | le débordement : 448 octets au-delà de `buf`, RIP sauvegardée à +88 |
+| 2 | seulement `snprintf(line, …, "%.*s", …)` ; mais `%` de l'attaquant dans le chemin d'echo | [CWE-134](https://cwe.mitre.org/data/definitions/134.html) | la fuite est ici la vraie payload ; un `%n` dans un processus *root* serait un write-what-where en root |
+| 3 | les enfants gardent root en traitant des entrées non fiables | [CWE-271](https://cwe.mitre.org/data/definitions/271.html) | le `drop_privs()` correct (setgroups→setgid→setuid, dans cet ordre, avec vérification) est dans le fichier, commenté, *délibérément jamais appelé* |
+| 4 | `ids=`, `stack=`, `libc=`, `BUF=` révélés à n'importe quel client | [CWE-200](https://cwe.mitre.org/data/definitions/200.html)) | sans ces fuites, les techniques shellcode et ret2libc ne pourraient pas calculer d'adresses (ASLR les vaincrait) |
 
 Le handler a exactement la même forme `buf[64]`/`read(512)` que les deux autres
 labs, donc le pipeline commun de reconnaissance par objdump fonctionne sans

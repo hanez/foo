@@ -179,10 +179,10 @@ dus de extra functie en techniek zouden niets leren. Verwijderd.
 
 | # | bug | CWE | notitie |
 |---|-----|-----|------|
-| 1 | `read(fd, buf, 512)` in een 64-byte stack-buffer | CWE-120 | de overloop: 448 bytes voorbij `buf`, opgeslagen RIP op +88 |
-| 2 | alleen `snprintf(line, …, "%.*s", …)`; maar aanvaller-`%` in het echo-pad | CWE-134 | het lek is hier de echte payload; een `%n` in een *root*-proces zou write-what-where als root zijn |
-| 3 | kinderen behouden root terwijl ze onbetrouwbare input afhandelen | CWE-271 | de correcte `drop_privs()` (setgroups→setgid→setuid, in die volgorde, met verificatie) staat in het bestand, gecommentarieerd, *bewust nooit aangeroepen* |
-| 4 | `ids=`, `stack=`, `libc=`, `BUF=` onthuld aan elke client | CWE-200 | zonder deze leaks konden de shellcode- en ret2libc-technieken geen adressen berekenen (ASLR zou ze verslaan) |
+| 1 | `read(fd, buf, 512)` in een 64-byte stack-buffer | [CWE-120](https://cwe.mitre.org/data/definitions/120.html) | de overloop: 448 bytes voorbij `buf`, opgeslagen RIP op +88 |
+| 2 | alleen `snprintf(line, …, "%.*s", …)`; maar aanvaller-`%` in het echo-pad | [CWE-134](https://cwe.mitre.org/data/definitions/134.html) | het lek is hier de echte payload; een `%n` in een *root*-proces zou write-what-where als root zijn |
+| 3 | kinderen behouden root terwijl ze onbetrouwbare input afhandelen | [CWE-271](https://cwe.mitre.org/data/definitions/271.html) | de correcte `drop_privs()` (setgroups→setgid→setuid, in die volgorde, met verificatie) staat in het bestand, gecommentarieerd, *bewust nooit aangeroepen* |
+| 4 | `ids=`, `stack=`, `libc=`, `BUF=` onthuld aan elke client | [CWE-200](https://cwe.mitre.org/data/definitions/200.html) | zonder deze leaks konden de shellcode- en ret2libc-technieken geen adressen berekenen (ASLR zou ze verslaan) |
 
 De handler heeft precies dezelfde `buf[64]`/`read(512)`-vorm als de twee andere
 labs, dus de gedeelde objdump-gebaseerde herkenningspipeline werkt ongewijzigd.

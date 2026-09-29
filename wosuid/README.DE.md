@@ -188,10 +188,10 @@ Technik nichts lehren. Entfernt.
 
 | # | Bug | CWE | Hinweis |
 |---|-----|-----|------|
-| 1 | `read(fd, buf, 512)` in einen 64-Byte-Stack-Puffer | CWE-120 | der Overflow: 448 Bytes über `buf` hinaus, gespeicherte RIP bei +88 |
-| 2 | nur `snprintf(line, …, "%.*s", …)`; aber Angreifer-`%` im Echo-Pfad | CWE-134 | das Leak ist hier der eigentliche Payload; ein `%n` in einem *root*-Prozess wäre write-what-where als root |
-| 3 | Kinder behalten root, während sie unvertrauenswürdige Eingaben behandeln | CWE-271 | das korrekte `drop_privs()` (setgroups→setgid→setuid, in dieser Reihenfolge, mit Verifikation) steht in der Datei, kommentiert, *bewusst nie aufgerufen* |
-| 4 | `ids=`, `stack=`, `libc=`, `BUF=` an jeden Client offengelegt | CWE-200 | ohne diese Leaks könnten Shellcode- und ret2libc-Techniken keine Adressen berechnen (ASLR würde sie schlagen) |
+| 1 | `read(fd, buf, 512)` in einen 64-Byte-Stack-Puffer | [CWE-120](https://cwe.mitre.org/data/definitions/120.html) | der Overflow: 448 Bytes über `buf` hinaus, gespeicherte RIP bei +88 |
+| 2 | nur `snprintf(line, …, "%.*s", …)`; aber Angreifer-`%` im Echo-Pfad | [CWE-134](https://cwe.mitre.org/data/definitions/134.html) | das Leak ist hier der eigentliche Payload; ein `%n` in einem *root*-Prozess wäre write-what-where als root |
+| 3 | Kinder behalten root, während sie unvertrauenswürdige Eingaben behandeln | [CWE-271](https://cwe.mitre.org/data/definitions/271.html) | das korrekte `drop_privs()` (setgroups→setgid→setuid, in dieser Reihenfolge, mit Verifikation) steht in der Datei, kommentiert, *bewusst nie aufgerufen* |
+| 4 | `ids=`, `stack=`, `libc=`, `BUF=` an jeden Client offengelegt | [CWE-200](https://cwe.mitre.org/data/definitions/200.html) | ohne diese Leaks könnten Shellcode- und ret2libc-Techniken keine Adressen berechnen (ASLR würde sie schlagen) |
 
 Der Handler hat exakt dieselbe `buf[64]`/`read(512)`-Form wie die beiden
 anderen Labore, sodass die geteilte objdump-basierte Erkennungspipeline

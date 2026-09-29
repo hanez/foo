@@ -3,7 +3,7 @@
 Un laboratorio de seguridad en C99 en dos mitades:
 
 - **`food.c`** — un demonio TCP deliberadamente vulnerable. Tiene un
-  desbordamiento de búfer de pila real, de libro de texto (CWE-120), más un par
+  desbordamiento de búfer de pila real, de libro de texto ([CWE-120](https://cwe.mitre.org/data/definitions/120.html)), más un par
   de errores de propina.
 - **`fooc.c`** — un exploit contra él. Calcula el offset del desbordamiento
   desensamblando el programa objetivo en tiempo de ejecución, lee las fugas de
@@ -244,7 +244,7 @@ columna derecha muestra qué hace realmente con la cadena de eventos.
 | **PIE + ASLR** | `-fPIE` + ASLR=2 (ambos por defecto) | Las direcciones hardcodeadas de ret2win. Todo se mueve en cada ejecución | Todo donde el atacante tenga una fuga. ASLR sube el precio de un exploit; no es un fix. Nota que la pila, el heap y mmap se randomizan, pero el *contenido* del binario principal no — eso es lo que usan las cadenas ROP |
 | **No fugues** | ningún `printf("%p")` a clientes; inicializa antes de imprimir | La fuga de información que hace que ASLR sea "gratis" en vez de "caro" | — |
 | **No uses `printf(user_data)`** | `printf("%s", buf)` en lugar de `printf(buf)` | Errores de cadena de formato: lecturas de pila `%x`, escrituras arbitrarias `%n` — un *otro* camino a RCE | — |
-| **No uses rutas no confiables** | valida y `openat()` bajo un directorio fijo | Path traversal (CWE-22) | — |
+| **No uses rutas no confiables** | valida y `openat()` bajo un directorio fijo | Path traversal ([CWE-22](https://cwe.mitre.org/data/definitions/22.html)) | — |
 | **CET / shadow stack** | `-fcf-protection=full`, soporte de kernel y CPU | El `ret` en sí: la shadow stack recuerda la *verdadera* dirección de retorno y falla ante un desajuste. Atrapa cadenas ROP que usan el `ret` de hardware | Ataques que nunca `ret` (call-oriented, o sobrescribir el objetivo de un puntero de función con una cadena de gadgets que no necesita retorno) |
 | **Lenguajes seguros** | Rust, Go, C# para código nuevo | Toda la clase. Las comprobaciones de límites se imponen en ejecución, no se esperan en la revisión | — |
 

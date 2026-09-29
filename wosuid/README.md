@@ -176,10 +176,10 @@ Removed.
 
 | # | bug | CWE | note |
 |---|-----|-----|------|
-| 1 | `read(fd, buf, 512)` into a 64-byte stack buffer | CWE-120 | the overflow: 448 bytes past `buf`, saved RIP at +88 |
-| 2 | `snprintf(line, …, "%.*s", …)` only; but attacker `%` in the echo path | CWE-134 | the leak is the real payload here; a `%n` in a *root* process would be write-what-where as root |
-| 3 | children keep root while handling untrusted input | CWE-271 | the correct `drop_privs()` (setgroups→setgid→setuid, in that order, with a verify) sits in the file, commented, *deliberately uncalled* |
-| 4 | `ids=`, `stack=`, `libc=`, `BUF=` disclosed to every client | CWE-200 | without these leaks the shellcode and ret2libc techniques could not compute addresses (ASLR would defeat them) |
+| 1 | `read(fd, buf, 512)` into a 64-byte stack buffer | [CWE-120](https://cwe.mitre.org/data/definitions/120.html) | the overflow: 448 bytes past `buf`, saved RIP at +88 |
+| 2 | `snprintf(line, …, "%.*s", …)` only; but attacker `%` in the echo path | [CWE-134](https://cwe.mitre.org/data/definitions/134.html) | the leak is the real payload here; a `%n` in a *root* process would be write-what-where as root |
+| 3 | children keep root while handling untrusted input | [CWE-271](https://cwe.mitre.org/data/definitions/271.html) | the correct `drop_privs()` (setgroups→setgid→setuid, in that order, with a verify) sits in the file, commented, *deliberately uncalled* |
+| 4 | `ids=`, `stack=`, `libc=`, `BUF=` disclosed to every client | [CWE-200](https://cwe.mitre.org/data/definitions/200.html) | without these leaks the shellcode and ret2libc techniques could not compute addresses (ASLR would defeat them) |
 
 The handler is exactly the same `buf[64]`/`read(512)` shape as the other two
 labs, so the shared objdump-based discovery pipeline works unchanged.

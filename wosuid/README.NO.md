@@ -179,10 +179,10 @@ rydde, så den ekstra funksjonen og teknikken ville ikke lært noe. Fjernet.
 
 | # | feil | CWE | notat |
 |---|-----|-----|------|
-| 1 | `read(fd, buf, 512)` inn i et 64-byte stack-buffer | CWE-120 | overløpet: 448 bytes forbi `buf`, lagret RIP ved +88 |
-| 2 | bare `snprintf(line, …, "%.*s", …)`; men angriper-`%` i ekko-stien | CWE-134 | leaket er her den reelle payloaden; et `%n` i en *root*-prosess ville vært write-what-where som root |
-| 3 | barn beholder root mens de håndterer upålitelige inputs | CWE-271 | det korrekte `drop_privs()` (setgroups→setgid→setuid, i den rekkefølgen, med verifikasjon) står i filen, kommentert, *bevisst aldri kalt* |
-| 4 | `ids=`, `stack=`, `libc=`, `BUF=` avslørt til enhver klient | CWE-200 | uten disse leaks kunne ikke shellcode- og ret2libc-teknikkene beregne adresser (ASLR ville beseiret dem) |
+| 1 | `read(fd, buf, 512)` inn i et 64-byte stack-buffer | [CWE-120](https://cwe.mitre.org/data/definitions/120.html) | overløpet: 448 bytes forbi `buf`, lagret RIP ved +88 |
+| 2 | bare `snprintf(line, …, "%.*s", …)`; men angriper-`%` i ekko-stien | [CWE-134](https://cwe.mitre.org/data/definitions/134.html) | leaket er her den reelle payloaden; et `%n` i en *root*-prosess ville vært write-what-where som root |
+| 3 | barn beholder root mens de håndterer upålitelige inputs | [CWE-271](https://cwe.mitre.org/data/definitions/271.html) | det korrekte `drop_privs()` (setgroups→setgid→setuid, i den rekkefølgen, med verifikasjon) står i filen, kommentert, *bevisst aldri kalt* |
+| 4 | `ids=`, `stack=`, `libc=`, `BUF=` avslørt til enhver klient | [CWE-120](https://cwe.mitre.org/data/definitions/120.html) | uten disse leaks kunne ikke shellcode- og ret2libc-teknikkene beregne adresser (ASLR ville beseiret dem) |
 
 Handleren har nøyaktig samme `buf[64]`/`read(512)`-form som de to andre
 laboratoriene, så den felles objdump-baserte oppdagelsespipelinen virker

@@ -184,10 +184,10 @@ Eliminada.
 
 | # | error | CWE | nota |
 |---|-----|-----|------|
-| 1 | `read(fd, buf, 512)` en un búfer de pila de 64 bytes | CWE-120 | el desbordamiento: 448 bytes más allá de `buf`, RIP guardada en +88 |
-| 2 | solo `snprintf(line, …, "%.*s", …)`; pero `%` del atacante en el camino de eco | CWE-134 | la fuga es aquí el payload real; un `%n` en un proceso *root* sería write-what-where como root |
-| 3 | los hijos conservan root mientras manejan entradas no confiables | CWE-271 | el `drop_privs()` correcto (setgroups→setgid→setuid, en ese orden, con verificación) está en el archivo, comentado, *deliberadamente nunca llamado* |
-| 4 | `ids=`, `stack=`, `libc=`, `BUF=` revelados a cualquier cliente | CWE-200 | sin estas fugas, las técnicas de shellcode y ret2libc no podrían calcular direcciones (ASLR las vencería) |
+| 1 | `read(fd, buf, 512)` en un búfer de pila de 64 bytes | [CWE-120](https://cwe.mitre.org/data/definitions/120.html) | el desbordamiento: 448 bytes más allá de `buf`, RIP guardada en +88 |
+| 2 | solo `snprintf(line, …, "%.*s", …)`; pero `%` del atacante en el camino de eco | [CWE-134](https://cwe.mitre.org/data/definitions/134.html) | la fuga es aquí el payload real; un `%n` en un proceso *root* sería write-what-where como root |
+| 3 | los hijos conservan root mientras manejan entradas no confiables | [CWE-271](https://cwe.mitre.org/data/definitions/271.html) | el `drop_privs()` correcto (setgroups→setgid→setuid, en ese orden, con verificación) está en el archivo, comentado, *deliberadamente nunca llamado* |
+| 4 | `ids=`, `stack=`, `libc=`, `BUF=` revelados a cualquier cliente | [CWE-200](https://cwe.mitre.org/data/definitions/200.html) | sin estas fugas, las técnicas de shellcode y ret2libc no podrían calcular direcciones (ASLR las vencería) |
 
 El handler tiene exactamente la misma forma `buf[64]`/`read(512)` que los otros
 dos laboratorios, así que el pipeline común de reconocimiento basado en objdump

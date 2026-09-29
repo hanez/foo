@@ -3,7 +3,7 @@
 A C99 security lab in two halves:
 
 - **`food.c`** — an intentionally vulnerable TCP daemon. It has a real,
-  textbook stack buffer overflow (CWE-120), and a few more bugs besides.
+  textbook stack buffer overflow ([CWE-120](https://cwe.mitre.org/data/definitions/120.html)), and a few more bugs besides.
 - **`fooc.c`** — an exploit for it. It computes the overflow offset by
   disassembling the target at runtime, reads address leaks from the daemon, and
   gets a shell on the "victim" by overwriting a saved return address.
@@ -236,7 +236,7 @@ column is what it actually does to the chain of events.
 | **PIE + ASLR** | `-fPIE` + ASLR=2 (both default) | ret2win's hardcoded addresses. Everything moves each run | Anything where the attacker has a leak. ASLR raises the cost of an exploit; it is not a fix. Note that stack, heap and mmap are randomised but the main binary's *contents* are not — that is what ROP chains use |
 | **Don't leak** | don't `printf("%p")` to clients; initialise before printing | The information leak that turns ASLR from "expensive" into "free" | — |
 | **Don't use `printf(user_data)`** | `printf("%s", buf)` instead of `printf(buf)` | Format-string bugs: `%x` stack reads, `%n` arbitrary writes, which is a *second* way to get RCE | — |
-| **Don't use untrusted paths** | validate and `openat()` under a fixed dir | Path traversal (CWE-22) | — |
+| **Don't use untrusted paths** | validate and `openat()` under a fixed dir | Path traversal ([CWE-22](https://cwe.mitre.org/data/definitions/22.html)) | — |
 | **CET / shadow stack** | `-fcf-protection=full`, kernel + CPU support | The `ret` itself: the shadow stack remembers the *real* return address and faults on a mismatch. Catches ROP chains that use hardware `ret` | Attacks that never `ret` (call-oriented, or overwriting a function pointer's target with a gadget chain that does not need a return) |
 | **Safe languages** | Rust, Go, C# for new code | The whole class. Bounds checks are checked at runtime, not hoped for at review time | — |
 
