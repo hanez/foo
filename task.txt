@@ -1,0 +1,25 @@
+TASKS:
+------
+
+1.] Create a daemon named food that listens on port 2342 that is
+exploitable via an RCE exploit by executing shell code. Also create the
+corresponding exploit named fooc which connects to the daemon and opens a remote
+shell on that daemon by using an exploit for food. I want to learn how these
+things work to protect my software aginst the kind of bugs. Also comment all
+lines of code to make it easy for me to understand what is going on. Please
+create all code in the C language using C99.
+
+2.] Also add a daemon named foodsd which will get the suid bit set and is
+exploitable and a client named foosc which will open a root shell via an RCE by
+executing shellcode. Tell when I should set the suid bit if you need this for
+testing. Please create all the new code in a subdirectory named ./suid. Also
+comment all code lines like you did before and add a README.md like you did for
+food and fooc. Please create all code in the C language using C99.
+
+3.] Create all the same but now we will not use suid bit set. Create a
+daemon named foowosd which is exploitable and a client named foowosc which will
+open a root shell via an RCE by executing shellcode. Please create all the new
+code in a subdirectory named ./wosuid. Also comment all code lines like you did
+before and add a README.md like you did for food and fooc. Please create all
+code in the C language using C99.
+

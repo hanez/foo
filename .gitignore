@@ -1,0 +1,17 @@
+# Build products
+food
+fooc
+food_hardened
+shellcode.bin
+.sc_c_raw.txt
+.sc_c.txt
+.sc_asm.txt
+
+# Test harness binaries
+tests/pty_test
+tests/sock_test
+
+# Runtime evidence -- your own logs, yours to keep or delete
+food.log
+food_hardened.log
+*.log

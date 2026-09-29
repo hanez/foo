@@ -1,0 +1,17 @@
+# Build products
+foowosd
+foowosc
+foowosd_hardened
+tests/pty_wosuid_test
+
+# Assembly verification scratch
+shellcode.bin
+.sc_c_raw.txt
+.sc_c.txt
+.sc_asm.txt
+
+# Logs
+foowosd.log
+foowosd_hardened.log
+*.log
+

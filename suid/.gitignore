@@ -1,0 +1,15 @@
+# Build products
+foosd
+foosd_hardened
+foosc
+shellcode.bin
+.sc_c_raw.txt
+.sc_c.txt
+.sc_asm.txt
+tests/pty_suid_test
+
+# Logs are evidence -- keep them out of git but present on disk
+foosd.log
+foosd_hardened.log
+*.log
+
